@@ -6,25 +6,25 @@ from googletrans import Translator
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Analizador de Texto Simple",
+    page_title="Procesador de Texto Básico",
     page_icon="📊",
     layout="wide"
 )
 
 # Título y descripción
-st.title("📝 Analizador de Texto con TextBlob")
+st.title("Evaluador Lingüístico con TextBlob")
 st.markdown("""
-Esta aplicación utiliza TextBlob para realizar un análisis básico de texto:
-- Análisis de sentimiento y subjetividad
-- Extracción de palabras clave
-- Análisis de frecuencia de palabras
+Esta herramienta emplea TextBlob para procesar y evaluar texto de forma elemental
+- Análisis de Texto con TextBlob
+- Analizador de Texto con TextBlob
+- Conteo léxico
 """)
 
 # Barra lateral
 st.sidebar.title("Opciones")
 modo = st.sidebar.selectbox(
-    "Selecciona el modo de entrada:",
-    ["Texto directo", "Archivo de texto"]
+    "Elige el método de ingreso:",
+    ["Entrada manual", "Documento de texto"]
 )
 
 # Función para contar palabras sin depender de NLTK
@@ -144,7 +144,7 @@ def crear_visualizaciones(resultados):
     
     # Visualización de sentimiento y subjetividad con barras de progreso de Streamlit
     with col1:
-        st.subheader("Análisis de Sentimiento y Subjetividad")
+        st.subheader("Evaluación Emocional y Perspectiva")
         
         # Normalizar valores para mostrarlos en barras de progreso
         # Sentimiento va de -1 a 1, lo normalizamos a 0-1 para la barra
@@ -154,24 +154,24 @@ def crear_visualizaciones(resultados):
         st.progress(sentimiento_norm)
         
         if resultados["sentimiento"] > 0.05:
-            st.success(f"📈 Positivo ({resultados['sentimiento']:.2f})")
+            st.success(f"🌈 Optimista ({resultados['sentimiento']:.2f})")
         elif resultados["sentimiento"] < -0.05:
-            st.error(f"📉 Negativo ({resultados['sentimiento']:.2f})")
+            st.error(f"🌧️ Pesimista ({resultados['sentimiento']:.2f})")
         else:
-            st.info(f"📊 Neutral ({resultados['sentimiento']:.2f})")
+            st.info(f"☁️ Imparcial ({resultados['sentimiento']:.2f})")
         
         # Subjetividad ya está en el rango 0-1
         st.write("**Subjetividad:**")
         st.progress(resultados["subjetividad"])
         
         if resultados["subjetividad"] > 0.5:
-            st.warning(f"💭 Alta subjetividad ({resultados['subjetividad']:.2f})")
+            st.warning(f"🎭 Opinión Pura ({resultados['subjetividad']:.2f})")
         else:
-            st.info(f"📋 Baja subjetividad ({resultados['subjetividad']:.2f})")
+            st.info(f"📋 Datos Puros ({resultados['subjetividad']:.2f})")
     
     # Palabras más frecuentes usando chart de Streamlit
     with col2:
-        st.subheader("Palabras más frecuentes")
+        st.subheader("Términos recurrentes")
         if resultados["contador_palabras"]:
             palabras_top = dict(list(resultados["contador_palabras"].items())[:10])
             st.bar_chart(palabras_top)
